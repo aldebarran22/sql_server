@@ -1,0 +1,9 @@
+# --- EXCLUIR PRESENTACIONES ---
+**/*.pptx
+
+# --- EXCLUIR ARCHIVOS DE BASES DE DATOS SQL SERVER ---
+**/*.mdf
+**/*.ldf
+**/*.ndf
+
+
