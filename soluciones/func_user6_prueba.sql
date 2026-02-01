@@ -1,0 +1,1 @@
+select *, dbo.func_user6(id) as concepto from dbo.VENTAS
