@@ -30,9 +30,9 @@ select count(*) from pais_alemania;
 
 ----------------------------------------------------------------------------------------------------------------
 
--- TABLAS TEMPORALES:
+-- TABLAS TEMPORALES LOCALES:
 
--- SQL SERVER: NO SOPORTA LA SINTAXIS: CREATE TABLE #NOMBRE_TABLA AS (SELECT ..);
+-- SQL SERVER: ¡NO SOPORTA LA SINTAXIS: CREATE TABLE #NOMBRE_TABLA AS (SELECT ..) !
 
 -- Una tabla temporal: # 
 -- Solo dura la sesión
@@ -48,6 +48,9 @@ select count(*) from #PedidosAlemania;
 select sum(cargo) from #PedidosAlemania;
 
 
+------------------------------------------------------------------
+
+
 -- TABLAS TEMPORALES GLOBALES:
 
 -- Una tabla temporal global: ##
@@ -55,9 +58,43 @@ select sum(cargo) from #PedidosAlemania;
 -- Se destruyen cuando  nadie las está utilizando!
 
 
+----------------------------------------------------------
+
 
 -- VARIABLES DE TIPO TABLA:
 
+DECLARE @MiTabla TABLE (
+	id int,
+	nombre varchar(10)
+);
+
+insert into @MiTabla values(1, 'Juan');
+insert into @MiTabla values(2, 'Ana');
+insert into @MiTabla values(3, 'Eva');
+
+select * from @MiTabla;
+
+
+--------------------------------------------------------------
+
+-- TABLAS DERIVADAS: Las subconsultas que están dentro de otra consulta.
 
 
 
+--------------------------------------------------------------
+
+-- LEFT JOIN vs *=
+select c.[NombreCategoría] 
+from Categorias c left join Productos p
+on c.[IdCategoría] = p.[IdCategoría]
+where p.IdCategoría is null;
+
+/* DA ERROR!
+select c.[NombreCategoría] 
+from Categorias c, Productos p
+where c.[IdCategoría] *= p.[IdCategoría];
+*/
+
+
+-----------------------------------------------------------------
+-- PLAN DE EJECUCION DE LA CONSULTA: CONTROL + L o EL ICONO, MARCAR ANTES LA CONSULTA
