@@ -31,7 +31,7 @@ end catch
 -- Solución a lo del indice, crear una columna calculada:
 -- =====================================================
 begin try
-	
+	-- Crear una columna y luego asignar el indice:
 	alter table pedidos add pais as upper([PaísDestinatario]) persisted;
 	create index idx_pais on pedidos([pais]);
 	-- Con persisted indicas que se calcule una vez y se guarde, si no ponemos persisted se calcula cada vez que se hace la consulta.
@@ -71,21 +71,3 @@ select * from sys.indexes where object_id = OBJECT_ID('Pedidos');
 
 
 ------------------------------------------------------------------------------------
-
--- tablas con mayúsculas / minúsculas: porque fallan si las ponemos en minúsculas:
--- Con que collation se ha importado?
-select name, collation_name from sys.databases;
-
--- Ver el collation real de la BD: ejecutar dentro de la base de datos:
-SELECT DATABASEPROPERTYEX(DB_NAME(), 'Collation') AS Collation;
-
--- OJO con el collation si contiene: CI -> Case Insensitive
--- Si viene CS --> es Case sensitive
-
--- Para cambiar el collation de la Base de datos:
--- ALTER DATABASE nombre_base_datos COLLATE Modern_Spanish_CI_AS;
-
-
-
-
-
