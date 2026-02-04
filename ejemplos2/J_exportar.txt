@@ -1,0 +1,20 @@
+Clic derecho en la base de datos
+
+Tasks → Generate Scripts
+
+Seleccionas la tabla
+
+En “Set Scripting Options”, clic en Advanced
+
+Cambia:
+
+Types of data to script → Schema and Data
+
+Opciones disponibles:
+
+Schema only → solo DDL
+
+Data only → solo INSERT
+
+Schema and Data → todo junto
+
