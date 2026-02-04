@@ -53,3 +53,13 @@ where [PaísDestinatario] in ('Alemania', 'Suiza', 'Finlandia');
 select sum(cargo)
 from pedidos
 where [PaísDestinatario] in ('Alemania', 'Suiza', 'Finlandia');
+
+
+select distinct [PaísDestinatario],[pais], idpedido+1 as idped
+from pedidos
+order by idped;
+
+select pais, min(cargo), max(cargo) from pedidos
+group by pais
+order by 1, 2 desc, 3 desc;
+

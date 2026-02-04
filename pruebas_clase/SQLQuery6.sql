@@ -1,0 +1,6 @@
+CREATE OR ALTER FUNCTION dbo.pedidosPorPais(@pais VARCHAR(50))
+RETURNS TABLE
+AS
+RETURN (
+SELECT * FROM pedidos WHERE pais = @pais
+);
