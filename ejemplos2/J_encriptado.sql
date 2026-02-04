@@ -39,5 +39,22 @@ SELECT @c AS Cifrado;
 SELECT CONVERT(NVARCHAR(200), DecryptByKey(@c)) AS Desencriptado;
 
 
+-- 4) Cerrar la clave: opcional:
+CLOSE SYMMETRIC KEY MiClave;
 
 
+
+-- para una Tabla =========================================================
+
+CREATE TABLE Prueba (id INT, dato VARBINARY(MAX));
+
+-- 1) Abrir la clave
+OPEN SYMMETRIC KEY MiClave
+DECRYPTION BY PASSWORD = 'Antonio123#$';
+
+DECLARE @texto2 NVARCHAR(MAX);
+SET @texto2 = 'hola mundo';
+
+INSERT INTO Prueba VALUES (1, EncryptByKey(Key_GUID('MiClave'), @texto2));
+
+SELECT id, CONVERT(NVARCHAR(200), DecryptByKey(dato)) AS dato_descifrado FROM Prueba;
