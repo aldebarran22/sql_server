@@ -1,7 +1,7 @@
 
 -- OJO no permite order by dentro la funcion de tabla inline
 
-create or alter function getIndicesTabla(@tabla varchar)
+create or alter function getIndicesTabla(@tabla varchar(20))
 returns table as
 return (SELECT 
     i.name AS index_name,
