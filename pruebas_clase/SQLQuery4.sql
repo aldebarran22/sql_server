@@ -1,12 +1,17 @@
-BEGIN TRY
-SELECT CAST('ABC' AS INT); -- Error de conversión
-END TRY
-BEGIN CATCH
-SELECT
-ERROR_NUMBER() AS NumeroError,
-ERROR_MESSAGE() AS Mensaje,
-ERROR_LINE() AS Linea,
-ERROR_PROCEDURE() AS Procedimiento;
-END CATCH;
 
-select @@connections;
+use Empresa_PRC;
+
+select dbo.OPERACIONES(10,20, 30);
+
+use Empresa_PRC;
+select pais, cargo+1 from pedidos
+order by 2;
+
+select * from dbo.pedidosPorPais('Alemania');
+
+select CONCAT(nombre, ' ', apellidos) from empleados;
+
+use Academia_PRC;
+
+select nombreAlum + ' ' + telefono from alumnos;
+select concat(nombreAlum , ' ' , telefono) from alumnos;

@@ -1,0 +1,6 @@
+CREATE OR ALTER FUNCTION dbo.paises()
+RETURNS TABLE
+AS
+RETURN (
+SELECT DISTINCT PAIS, PaísDestinatario FROM pedidos
+);
