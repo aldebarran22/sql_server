@@ -12,6 +12,10 @@ begin try
 end try
 begin catch
 	set @codigo = @@ERROR;
+	print @codigo;
 	print error_message()
 
 end catch;
+
+
+insert into categorias(idCategoría, nombreCategoría) values(1, 'bebidas2');
