@@ -31,3 +31,11 @@ INSERT INTO T1 VALUES ('hola   ');
 SELECT v, DATALENGTH(v) FROM T1;
 DROP TABLE T1;
 
+SET STATISTICS TIME OFF
+
+SET ARITHABORT ON;
+SELECT 1 / 0;
+select 4 / 3;
+
+
+EXEC master.dbo.xp_enum_oledb_providers;
