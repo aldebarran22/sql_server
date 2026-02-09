@@ -11,7 +11,7 @@ go
 
 select * from openrowset(
 'MSDASQL', 
-'Driver={MySQL ODBC 8.0 ANSI Driver};Server=localhost;Database=empresa3;User=root;Password=antonio;',
+'Driver={MySQL ODBC 9.6 ANSI Driver};Server=localhost;Database=empresa3;User=root;Password=antonio;',
 'select * from clientes'
 );
 
@@ -36,7 +36,7 @@ EXEC master.dbo.xp_enum_oledb_providers;
 SELECT *
 FROM OPENROWSET(
     'MSDASQL',
-    'Driver={MySQL ODBC 8.0 ANSI Driver};',
+    'Driver={MySQL ODBC 9.6 ANSI Driver};',
     'SELECT 1'
 );
 
