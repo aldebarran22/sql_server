@@ -1,6 +1,8 @@
 
 -- 
-set xact_abort on;
+set xact_abort off;
+
+use Empresa_PRC;
 
 -- Codigo principal:
 declare @a int;
@@ -16,6 +18,7 @@ end try
 begin catch
 	print 'ERROR: ' + error_message();
 	print 'PROCEDURE: ' + error_procedure();
+	print 'SEVERITY: ' + convert(varchar(20), error_severity());
 end catch;
 
 -- Codigo principal:
