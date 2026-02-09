@@ -32,13 +32,5 @@ EXEC sp_MSset_oledb_prop 'MSDASQL', N'DynamicParameters', 1;
 EXEC master.dbo.xp_enum_oledb_providers;
 
 
--- Comprobar si esta activo el driver:
-SELECT *
-FROM OPENROWSET(
-    'MSDASQL',
-    'Driver={MySQL ODBC 9.6 ANSI Driver};',
-    'SELECT 1'
-);
-
 
 

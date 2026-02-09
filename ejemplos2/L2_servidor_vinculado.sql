@@ -2,39 +2,39 @@
 
 -- Ejemplo de un servidor vinculado al servidor local de mi instancia:
 EXEC sp_addlinkedserver 
-    @server = 'LocalAlias',
+    @server = 'alias4',
     @srvproduct = '',
     @provider = 'SQLNCLI',
-    @datasrc = 'localhost\SQLEXPRESS';
-
+    @datasrc = '172.16.3.149'
 EXEC sp_addlinkedsrvlogin 
-    @rmtsrvname = 'LocalAlias',
-    @useself = 'True',
-    @locallogin = NULL,
-    @rmtuser = NULL,
-    @rmtpassword = NULL;
+    @rmtsrvname = 'alias4',
+    @useself = 'False',
+    @rmtuser = 'david',
+    @rmtpassword = '123456789';
 
 
 -- Pruebas
-SELECT * FROM LocalAlias.master.sys.databases;
+SELECT * FROM alias4.master.sys.databases;
 
-SELECT * FROM LocalAlias.Empresa_PRC.dbo.clientes;
+SELECT * FROM LocalAlias2.Empresa_PRC.dbo.clientes;
+
+EXEC master.dbo.xp_enum_oledb_providers;
 
 
 -- Para ejecutar EXEC AT: hay que habilitar RPC, y RPC_OUT
 EXEC master.dbo.sp_serveroption 
-    @server = 'LocalAlias', 
+    @server = 'LocalAlias2', 
     @optname = 'rpc', 
     @optvalue = 'true';
 
 EXEC master.dbo.sp_serveroption 
-    @server = 'LocalAlias', 
+    @server = 'LocalAlias2', 
     @optname = 'rpc out', 
     @optvalue = 'true';
 
 
-EXECUTE ('use Empresa_PRC; CREATE TABLE dbo.Test (Id INT)') AT LocalAlias;
-EXECUTE ('use Empresa_PRC; select * from pedidos') AT LocalAlias;
+EXECUTE ('use Empresa_PRC; CREATE TABLE dbo.Test (Id INT)') AT LocalAlias2;
+EXECUTE ('use Empresa_PRC; select * from pedidos') AT LocalAlias2;
 
 
 

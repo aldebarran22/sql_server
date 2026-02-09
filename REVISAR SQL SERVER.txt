@@ -1,0 +1,5 @@
+openrowset para Excel
+openquery a mi localhost del portatil
+bcp in / out para sql server (ficheros)
+concurrencia
+
