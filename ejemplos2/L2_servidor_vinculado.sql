@@ -34,7 +34,23 @@ EXEC master.dbo.sp_serveroption
 
 
 EXECUTE ('use Empresa_PRC; CREATE TABLE dbo.Test (Id INT)') AT LocalAlias;
-
 EXECUTE ('use Empresa_PRC; select * from pedidos') AT LocalAlias;
 
+
+
+-- Ver informacion configurada:
 EXEC master.dbo.sp_helpserver 'LocalAlias';
+
+SELECT *
+FROM OPENQUERY(LocalAlias, 'SELECT name, database_id FROM master.sys.databases');
+
+
+-- COMPARATIVA:
+SELECT *
+FROM OPENQUERY(LocalAlias, 'SELECT * FROM Empresa_PRC.dbo.clientes');
+
+EXECUTE ('use Empresa_PRC; select * from clientes') AT LocalAlias;
+
+SELECT * FROM LocalAlias.Empresa_PRC.dbo.clientes;
+
+
