@@ -1,5 +1,20 @@
 openrowset para Excel
+
 openquery a mi localhost del portatil
+
 bcp in / out para sql server (ficheros)
+
 concurrencia
 
+queryplan guardar de un usuario,o las consultas
+que hace (monitorizacion)
+
+consultas mas pesadas
+
+estadisticas
+
+tamaño de la caché (fraccionamiento)
+
+nivel de la transaccion en una sola
+consulta, lectura de datos sucios
+cuando la tabla esta bloqueada.
