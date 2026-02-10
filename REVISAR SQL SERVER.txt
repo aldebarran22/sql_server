@@ -4,7 +4,7 @@ openquery a mi localhost del portatil
 
 bcp in / out para sql server (ficheros)
 
-concurrencia
+concurrencia -> bloqueos
 
 queryplan guardar de un usuario,o las consultas
 que hace (monitorizacion)
