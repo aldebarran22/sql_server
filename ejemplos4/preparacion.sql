@@ -1,5 +1,10 @@
 -- preparacion para un deadlock
 
+use Empresa_PRC;
+
 create table dbo.testdeadlock (id int, valor varchar(50));
 
 insert into dbo.testdeadlock values (1,'A'), (2, 'B');
+
+
+select * from dbo.testdeadlock;
