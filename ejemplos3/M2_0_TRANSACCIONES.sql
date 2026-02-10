@@ -68,6 +68,8 @@ select * FROM sys.dm_exec_requests where database_id=8;
 sp_who;
 sp_lock;
 
+select * from msdb.sys.procedures where name like '%who%';
+
 DBCC TRACEON(3604);
 
 select object_name(72057594048479232);
@@ -81,5 +83,3 @@ SELECT text FROM sys.dm_exec_sql_text(0x020000007BD4C30DAAB3CF89E033C4830597769E
 
 select * from sys.dm_exec_requests;
 
-
-;

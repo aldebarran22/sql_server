@@ -18,3 +18,14 @@ tamaño de la caché (fraccionamiento)
 nivel de la transaccion en una sola
 consulta, lectura de datos sucios
 cuando la tabla esta bloqueada.
+
+ddbc comandos: sqltext(session_id)
+sp_who;
+
+
+resolver transacciones que se han quedado colgadas y hay que resolverlas con commit/rollback
+a partir del complete_exact, 
+
+
+
+
