@@ -20,7 +20,7 @@ DECLARE @x CHAR(10) = 'hola';
 SELECT @x, LEN(@x);
 
 -- No afecta a variables, si no, a las tablas:
-SET ANSI_PADDING ON;
+SET ANSI_PADDING OFF;
 DECLARE @v VARCHAR(10) = 'hola   ';
 SELECT @v, DATALENGTH(@v);
 

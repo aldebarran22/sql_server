@@ -33,4 +33,10 @@ EXEC master.dbo.xp_enum_oledb_providers;
 
 
 
+SELECT *
+FROM OPENROWSET(BULK 'C:\antonio2\iris.csv',
+FORMAT='CSV',PARSER_VERSION='2.0')
+WITH (SepalLength float,SepalWidth float,PetalLength float,PetalWidth float,Name varchar(100)) AS t;
+
+
 
