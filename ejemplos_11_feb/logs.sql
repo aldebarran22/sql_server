@@ -103,3 +103,11 @@ WHERE EventClass IN (92, 93)   -- 92 = Data File Auto Grow, 93 = Log File Auto G
 ORDER BY StartTime DESC;
 
 
+
+-- TRANSACTION LOG:
+DBCC SQLPERF(LOGSPACE);
+
+DBCC LOGINFO;
+
+DBCC SHRINKFILE ('Empresa_PRC', 1024);  -- reduce a 1 GB
+
