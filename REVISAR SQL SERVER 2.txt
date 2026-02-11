@@ -1,0 +1,3 @@
+Revisar sql:
+- estadísticas
+- ficheros de logs, posibilidades de rotación.No lo utilizan: 

@@ -2,6 +2,7 @@
 use Empresa_PRC;
 
 
+
 EXEC sp_configure 'max server memory (MB)';
 
 SELECT 
@@ -23,12 +24,14 @@ SELECT
     process_virtual_memory_low AS VirtualBaja
 FROM sys.dm_os_process_memory;
 
-
+select * FROM sys.dm_os_process_memory;
 -- memoria total del sistema:
 SELECT 
     total_physical_memory_kb / 1024 AS RAM_Total_MB,
     available_physical_memory_kb / 1024 AS RAM_Libre_MB
 FROM sys.dm_os_sys_memory;
+
+select * from sys.dm_os_sys_memory;
 
 
 -- Tamaño del buffer Pool:
@@ -51,6 +54,9 @@ FROM sys.dm_os_buffer_descriptors
 WHERE database_id <> 32767
 GROUP BY database_id
 ORDER BY BufferPool_MB DESC;
+
+select * from sys.dm_tran_active_transactions;
+
 
 
 -- limpiar el buffer pool
