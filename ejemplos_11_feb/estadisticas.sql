@@ -48,6 +48,7 @@ SELECT
     io_stall_write_ms / NULLIF(num_of_writes,0) AS WriteLatency_ms
 FROM sys.dm_io_virtual_file_stats(NULL, NULL);
 
+select * FROM sys.dm_io_virtual_file_stats(NULL, NULL);
 
 /*
    5) ESPERAS — Qué está esperando SQL Server
@@ -93,7 +94,7 @@ FROM sys.dm_exec_query_stats
 ORDER BY total_logical_reads DESC;
 
 -- Con SQL:
-SELECT TOP 20 
+SELECT 
     qs.total_logical_reads AS TotalReads,
     qs.total_worker_time AS TotalCPU,
     qs.total_elapsed_time AS TotalTime,
@@ -131,6 +132,19 @@ ORDER BY indexstats.avg_fragmentation_in_percent DESC;
 -- Reorganizar indices y volver a ejecutar:
 ALTER INDEX PK_Pedidos ON dbo.Pedidos REORGANIZE;
 
+alter index PK_pdw_errors on dbo.pdw_errors reorganize;
+
+select @@ERROR;
+select ERROR_MESSAGE(), ERROR_NUMBER();
+
+begin try
+select 1/0;
+end try
+begin catch
+print error_number();
+end catch
+
+
 
 
 
@@ -149,6 +163,7 @@ LEFT JOIN sys.dm_db_index_usage_stats s
     ON i.object_id = s.object_id
     AND i.index_id = s.index_id
 WHERE OBJECTPROPERTY(i.object_id, 'IsUserTable') = 1;
+
 
 
 /* 
@@ -184,6 +199,11 @@ SELECT
 FROM sys.dm_db_file_space_usage;
 
 
+
+select * from sys.stats;
+select OBJECT_NAME(object_id), * from sys.stats;
+
+
 /* 
    15) CONEXIONES — Sesiones activas
    */
@@ -208,7 +228,9 @@ SELECT
 FROM sys.dm_exec_sessions
 GROUP BY program_name;
 
+use DWDiagnostics;
 
+select * from dbo.pdw_errors;
 /* 
    17) CONTADORES — Estadísticas globales del servidor
    */

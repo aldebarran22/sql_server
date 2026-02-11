@@ -38,14 +38,13 @@ EXEC sp_cycle_errorlog;
 
 
 select @@VERSION;
-
 SELECT *
 FROM sys.fn_xe_file_target_read_file(
-    'C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\Log\system_health*.xel',
-    'C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\Log\system_health*.xem',
+    'C:\Program Files\Microsoft SQL Server\MSSQL17.ANTONIO\MSSQL\Log\system_health*.xel',
+    'C:\Program Files\Microsoft SQL Server\MSSQL17.ANTONIO\MSSQL\Log\system_health*.xem',
     NULL,
     NULL
-);
+) ORDER BY timestamp_utc desc;
 
 SELECT * 
 FROM sys.dm_xe_sessions;
@@ -83,7 +82,7 @@ WHERE name = 'default trace enabled';
 SELECT * FROM fn_trace_getinfo(NULL);
 
 -- VER EL CONTENIDO DEL ARCHIVO:
-SELECT * FROM fn_trace_gettable('C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\Log\log_44.trc', DEFAULT);
+SELECT * FROM fn_trace_gettable('C:\Program Files\Microsoft SQL Server\MSSQL17.ANTONIO\MSSQL\Log\log_10.trc', DEFAULT);
 
 -- VER EVENTOS DE AUTOGROW:
 SELECT 
@@ -110,4 +109,6 @@ DBCC SQLPERF(LOGSPACE);
 DBCC LOGINFO;
 
 DBCC SHRINKFILE ('Empresa_PRC', 1024);  -- reduce a 1 GB
+
+select * from dbo.pedidos;
 

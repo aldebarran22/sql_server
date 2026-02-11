@@ -1,0 +1,34 @@
+<event name="scheduler_monitor_system_health_ring_buffer_recorded" package="sqlos" timestamp="2026-02-11T14:21:57.991Z">
+    <data name="id">
+        <value>0</value>
+    </data>
+    <data name="timestamp">
+        <value>0</value>
+    </data>
+    <data name="process_utilization">
+        <value>0</value>
+    </data>
+    <data name="system_idle">
+        <value>65</value>
+    </data>
+    <data name="user_mode_time">
+        <value>1406250</value>
+    </data>
+    <data name="kernel_mode_time">
+        <value>0</value>
+    </data>
+    <data name="page_faults">
+        <value>41</value>
+    </data>
+    <data name="working_set_delta">
+        <value>167936</value>
+    </data>
+    <data name="memory_utilization">
+        <value>79</value>
+    </data>
+    <data name="call_stack">
+        <value>
+            <![CDATA[]]>
+        </value>
+    </data>
+</event>

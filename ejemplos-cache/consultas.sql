@@ -59,6 +59,7 @@ select * from sys.dm_tran_active_transactions;
 
 
 
+
 -- limpiar el buffer pool
 DBCC DROPCLEANBUFFERS;
 
@@ -88,6 +89,8 @@ WHERE type IN (
 )
 GROUP BY type
 ORDER BY MB DESC;
+
+select * from sys.databases;
 
 
 -- Plan cache:
