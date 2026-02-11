@@ -61,16 +61,16 @@ FROM sys.dm_os_wait_stats
 ORDER BY wait_time_ms DESC;
 
 
-/* ============================================================
+/*
    6) BLOQUEOS — Bloqueos actuales en el servidor
-   ============================================================ */
+   */
 SELECT * 
 FROM sys.dm_tran_locks;
 
 
-/* ============================================================
+/*
    7) SESIONES ESPERANDO — Qué sesiones están bloqueadas
-   ============================================================ */
+   */
 SELECT 
     session_id,
     wait_type,
@@ -80,9 +80,9 @@ SELECT
 FROM sys.dm_os_waiting_tasks;
 
 
-/* ============================================================
+/* 
    8) CONSULTAS PESADAS — Lecturas, CPU, tiempo
-   ============================================================ */
+  */
 SELECT TOP 20
     total_logical_reads AS TotalReads,
     total_worker_time AS TotalCPU,
@@ -92,10 +92,29 @@ SELECT TOP 20
 FROM sys.dm_exec_query_stats
 ORDER BY total_logical_reads DESC;
 
+-- Con SQL:
+SELECT TOP 20 
+    qs.total_logical_reads AS TotalReads,
+    qs.total_worker_time AS TotalCPU,
+    qs.total_elapsed_time AS TotalTime,
+    qs.execution_count,
+    qs.query_hash,
+    SUBSTRING(st.text, 
+              (qs.statement_start_offset/2) + 1,
+              ((CASE qs.statement_end_offset 
+                    WHEN -1 THEN DATALENGTH(st.text)
+                    ELSE qs.statement_end_offset 
+                END - qs.statement_start_offset)/2) + 1
+    ) AS QueryText
+FROM sys.dm_exec_query_stats qs
+CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) st
+ORDER BY qs.total_logical_reads DESC;
 
-/* ============================================================
+
+
+/* 
    9) ÍNDICES — Fragmentación de índices
-   ============================================================ */
+    */
 SELECT 
     dbschemas.[name] AS SchemaName,
     dbtables.[name] AS TableName,
@@ -109,10 +128,15 @@ JOIN sys.indexes dbindexes ON dbindexes.[object_id] = indexstats.[object_id]
 WHERE indexstats.avg_fragmentation_in_percent > 20
 ORDER BY indexstats.avg_fragmentation_in_percent DESC;
 
+-- Reorganizar indices y volver a ejecutar:
+ALTER INDEX PK_Pedidos ON dbo.Pedidos REORGANIZE;
 
-/* ============================================================
+
+
+
+/*
    10) ÍNDICES — Uso de índices (cuáles no se usan)
-   ============================================================ */
+   */
 SELECT 
     OBJECT_NAME(i.object_id) AS TableName,
     i.name AS IndexName,
@@ -127,21 +151,21 @@ LEFT JOIN sys.dm_db_index_usage_stats s
 WHERE OBJECTPROPERTY(i.object_id, 'IsUserTable') = 1;
 
 
-/* ============================================================
+/* 
    11) LOG — Uso del Transaction Log
-   ============================================================ */
+*/
 DBCC SQLPERF(LOGSPACE);
 
 
-/* ============================================================
+/*
    12) LOG — VLFs (Virtual Log Files)
-   ============================================================ */
+  */
 DBCC LOGINFO;
 
 
-/* ============================================================
+/*
    13) LOG — Por qué no se trunca el log
-   ============================================================ */
+  */
 SELECT 
     name,
     recovery_model_desc,
@@ -149,9 +173,9 @@ SELECT
 FROM sys.databases;
 
 
-/* ============================================================
+/*
    14) TEMPDB — Uso interno de TempDB
-   ============================================================ */
+  */
 SELECT 
     SUM(user_object_reserved_page_count)*8 AS UserObjects_KB,
     SUM(internal_object_reserved_page_count)*8 AS InternalObjects_KB,
@@ -160,9 +184,9 @@ SELECT
 FROM sys.dm_db_file_space_usage;
 
 
-/* ============================================================
+/* 
    15) CONEXIONES — Sesiones activas
-   ============================================================ */
+   */
 SELECT 
     session_id,
     login_name,
@@ -171,12 +195,13 @@ SELECT
     status,
     cpu_time,
     memory_usage
-FROM sys.dm_exec_sessions;
+FROM sys.dm_exec_sessions where status='running';
 
 
-/* ============================================================
-   16) CONEXIONES — Conexiones por aplicación
-   ============================================================ */
+/*  16) CONEXIONES — Conexiones por aplicación
+   */
+
+-- Las conexiones que se ven a NULL pueden ser internas del propio SQL Server:
 SELECT 
     program_name,
     COUNT(*) AS ConnectionCount
@@ -184,11 +209,18 @@ FROM sys.dm_exec_sessions
 GROUP BY program_name;
 
 
-/* ============================================================
+/* 
    17) CONTADORES — Estadísticas globales del servidor
-   ============================================================ */
+   */
 SELECT 
     object_name,
     counter_name,
     cntr_value
-FROM sys.dm_os_performance_counters;
+FROM sys.dm_os_performance_counters order by 3 desc;
+
+-- Mide el tiempo que puede estar una pagina en el buffer pool antes de ser expulsada
+SELECT 
+    counter_name,
+    cntr_value AS PageLifeExpectancy
+FROM sys.dm_os_performance_counters
+WHERE counter_name = 'Page life expectancy';
